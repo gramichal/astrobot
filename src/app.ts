@@ -58,7 +58,7 @@ client.on('messageCreate', (message: any) => {
 		}
 	}
 
-	console.log(`${message.author.username}: [${message.channel}] ${message.content}`);
+	console.log(`[${message.createdAt.toLocaleString()}] ${message.author.username}@${message.channel}: ${message.content}`);
 });
 
 client.on('interactionCreate', (interaction: any) => {
