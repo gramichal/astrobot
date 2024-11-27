@@ -1,7 +1,6 @@
 require('dotenv').config();
 const { Client, IntentsBitField, ActivityType } = require('discord.js');
 const { didYouWin } = require('./didYouWin');
-//const { WordPlay } = require('./WordPlay');
 
 const client = new Client({
 	intents: [
@@ -12,10 +11,10 @@ const client = new Client({
 	]
 });
 
-let word = 'NIGGER';
-let inputWord = [];
+let word: string = 'NIG';
+let inputWord: string[] = [];
 
-client.on('ready', (c) => {
+client.on('ready', (c: any) => {
 	console.log(`${c.user.username} is online`);
 
 	// ustawiamy status bota. Typ custom pozwala na usunięcie przedrostków 'Jest w grze', 'Słucha' itd
@@ -25,43 +24,44 @@ client.on('ready', (c) => {
 	});
 });
 
-client.on('messageCreate', (message) => {
+client.on('messageCreate', (message: any) => {
 	// sprawdzamy czy wiadomość nie jest od bota - żeby się boty nie zapętlały
 	if (message.author.bot) {
 		return;
 	}
 
-	// sprawdzamy czy wiadomość/literka wysłana przez użytkownika znajduje się w słowie-kluczu
-	// jeśli nie to nie zawracamy sobie głowy
-	if (message.content !== '' && word.includes(message.content)) {
-		
-	// 	// dodajemy literkę do tablicy
-		inputWord.push(message.content);
+	// gra w słowa może być tylko na głównym kanale
+	if (message.channel == process.env.CHANNEL_MAIN_ID) {
 
-	// 	// jeśli wprowadzone przez użytkowników 'słowo' jest takie samo jak poszukiwane to instant win
-		if (inputWord.join("") === word) {
-			inputWord = didYouWin(message, true);
-		}
+		// sprawdzamy czy wiadomość/literka wysłana przez użytkownika znajduje się w słowie-kluczu
+		// jeśli nie to nie zawracamy sobie głowy
+		if ((message.content !== '' && word.includes(message.content))) {
+			
+			// dodajemy literkę do tablicy
+			inputWord.push(message.content);
 
-	// 	// porównujemy wprowadzoną część słowa do takiej samej części słowa-klucza
-	// 	// pozwala zachować kolejność liter
-		if (inputWord.join("") !== word.slice(0, inputWord.length)) {
+			// jeśli wprowadzone przez użytkowników 'słowo' jest takie samo jak poszukiwane to instant win
+			if (inputWord.join("") === word) {
+				inputWord = didYouWin(message, true);
+			}
+
+			// porównujemy wprowadzoną część słowa do takiej samej części słowa-klucza
+			// pozwala zachować kolejność liter
+			if (inputWord.join("") !== word.slice(0, inputWord.length)) {
+				inputWord = didYouWin(message, false);
+			}
+
+		// jeśli konkurs na słowo już wystartował a wiadomość/litera nie znajduje się w słowie-kluczu
+		// to instalose
+		} else if (inputWord.length > 0) {
 			inputWord = didYouWin(message, false);
 		}
-
-	// // jeśli konkurs na słowo już wystartował a wiadomość/litera nie znajduje się w słowie-kluczu
-	// // to instalose
-	} else if (inputWord.length > 0) {
-		inputWord = didYouWin(message, false);
 	}
-	
-	// const wordPlay = new WordPlay(message, word, inputWord);
-	// inputWord = wordPlay.play();
 
-	console.log(`${message.author.username}: ${message.content}`);
+	console.log(`${message.author.username}: [${message.channel}] ${message.content}`);
 });
 
-client.on('interactionCreate', (interaction) => {
+client.on('interactionCreate', (interaction: any) => {
 	if (!interaction.isChatInputCommand()) return;
 
 	if (interaction.commandName === 'status') {
