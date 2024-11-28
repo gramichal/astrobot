@@ -5,7 +5,7 @@ const cron = require('cron');
 const { didYouWin } = require('./lib/didYouWin.js');
 const { Anniversary } = require('./classes/Anniversary.js');
 
-// pewnie przejdziemy na baze danych z roczniczami - póki co tablica obiektów typu AnniversaryData
+// pewnie przejdziemy na baze danych z rocznicami - póki co tablica obiektów typu AnniversaryData
 const { ANNIVERSARIES } = require('./data/anniversaries.js');
 
 interface WordPlay {
