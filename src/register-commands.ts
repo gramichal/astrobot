@@ -1,31 +1,31 @@
 require('dotenv').config();
 const { REST, Routes, ApplicationCommandOptionType } = require('discord.js');
 
-const commands = [
-	{
-		name: 'status',
-		description: 'Pozwala ustawić status',
-		options: [
-			{
-				name: 'bot-status',
-				description: 'Treść statusu bota',
-				type: ApplicationCommandOptionType.String,
-				required: true
-			}
-		]
-	},
-	{
-		name: 'wordplay',
-		description: 'Pozwala ustawić słowo do gry w N',
-		options: [
-			{
-				name: 'word',
-				description: 'Słowo do gry w N',
-				type: ApplicationCommandOptionType.String,
-				required: true
-			}
-		]
-	}
+const commands: object[] = [
+	// {
+	// 	name: 'status',
+	// 	description: 'Pozwala ustawić status',
+	// 	options: [
+	// 		{
+	// 			name: 'bot-status',
+	// 			description: 'Treść statusu bota',
+	// 			type: ApplicationCommandOptionType.String,
+	// 			required: true
+	// 		}
+	// 	]
+	// },
+	// {
+	// 	name: 'wordplay',
+	// 	description: 'Pozwala ustawić słowo do gry w N',
+	// 	options: [
+	// 		{
+	// 			name: 'word',
+	// 			description: 'Słowo do gry w N',
+	// 			type: ApplicationCommandOptionType.String,
+	// 			required: true
+	// 		}
+	// 	]
+	// }
 ];
 
 const rest = new REST({ version: 10 }).setToken(process.env.TOKEN);

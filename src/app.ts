@@ -1,6 +1,26 @@
 require('dotenv').config();
-const { Client, IntentsBitField, ActivityType } = require('discord.js');
-const { didYouWin } = require('./didYouWin');
+const { Client, IntentsBitField, ActivityType, EmbedBuilder } = require('discord.js');
+const cron = require('cron');
+
+const { didYouWin } = require('./lib/didYouWin.js');
+const { Anniversary } = require('./classes/Anniversary.js');
+
+// pewnie przejdziemy na baze danych z roczniczami - póki co tablica obiektów typu AnniversaryData
+const { ANNIVERSARIES } = require('./data/anniversaries.js');
+
+interface WordPlay {
+	word: string;
+	inputWord: string[];
+	timeStart: Date;
+};
+
+interface AnniversaryData {
+	date: Date,
+	title: string,
+	color: string,
+	description?: string,
+	imageUrl?: string
+};
 
 const client = new Client({
 	intents: [
@@ -11,8 +31,11 @@ const client = new Client({
 	]
 });
 
-let word: string = 'NIG';
-let inputWord: string[] = [];
+const Play: WordPlay = {
+	word: 'NIGGER',
+	inputWord: [],
+	timeStart: new Date(),
+};
 
 client.on('ready', (c: any) => {
 	console.log(`${c.user.username} is online`);
@@ -22,6 +45,17 @@ client.on('ready', (c: any) => {
 		name: "Sprzedam słoik i 5kg twarogu!",
 		type: ActivityType.Custom
 	});
+
+	// ustawiamy crona aby codziennie o określonej godzinie robił akcję
+	let scheduledMessage = new cron.CronJob('00 45 15 * * *', () => {
+		// trawersujemy całą tablicę rocznic
+		ANNIVERSARIES.forEach((anniversary: AnniversaryData) => {
+			new Anniversary(client, new EmbedBuilder(), anniversary).celebrate();
+		});
+	});
+	// startujemy roskład dnia
+	scheduledMessage.start();
+	
 });
 
 client.on('messageCreate', (message: any) => {
@@ -35,26 +69,29 @@ client.on('messageCreate', (message: any) => {
 
 		// sprawdzamy czy wiadomość/literka wysłana przez użytkownika znajduje się w słowie-kluczu
 		// jeśli nie to nie zawracamy sobie głowy
-		if ((message.content !== '' && word.includes(message.content))) {
+		if ((message.content !== '' && Play.word.includes(message.content))) {
 			
 			// dodajemy literkę do tablicy
-			inputWord.push(message.content);
+			Play.inputWord.push(message.content);
+			if (Play.inputWord.length === 1) {
+				Play.timeStart = new Date();
+			}
 
 			// jeśli wprowadzone przez użytkowników 'słowo' jest takie samo jak poszukiwane to instant win
-			if (inputWord.join("") === word) {
-				inputWord = didYouWin(message, true);
+			if (Play.inputWord.join("") === Play.word) {
+				Play.inputWord = didYouWin(message, new EmbedBuilder, true, Play);
 			}
 
 			// porównujemy wprowadzoną część słowa do takiej samej części słowa-klucza
 			// pozwala zachować kolejność liter
-			if (inputWord.join("") !== word.slice(0, inputWord.length)) {
-				inputWord = didYouWin(message, false);
+			if (Play.inputWord.join("") !== Play.word.slice(0, Play.inputWord.length)) {
+				Play.inputWord = didYouWin(message, new EmbedBuilder, false, Play);
 			}
 
 		// jeśli konkurs na słowo już wystartował a wiadomość/litera nie znajduje się w słowie-kluczu
 		// to instalose
-		} else if (inputWord.length > 0) {
-			inputWord = didYouWin(message, false);
+		} else if (Play.inputWord.length > 0) {
+			Play.inputWord = didYouWin(message, new EmbedBuilder, false, Play);
 		}
 	}
 
@@ -64,19 +101,19 @@ client.on('messageCreate', (message: any) => {
 client.on('interactionCreate', (interaction: any) => {
 	if (!interaction.isChatInputCommand()) return;
 
-	if (interaction.commandName === 'status') {
-		const status = interaction.options.get('bot-status').value;
-		client.user.setActivity({
-			name: status,
-			type: ActivityType.Custom
-		});
-		interaction.reply(`Status zmieniony na: ${status}`);
-	}
+	// if (interaction.commandName === 'status') {
+	// 	const status = interaction.options.get('bot-status').value;
+	// 	client.user.setActivity({
+	// 		name: status,
+	// 		type: ActivityType.Custom
+	// 	});
+	// 	interaction.reply(`Status zmieniony na: ${status}`);
+	// }
 
-	if (interaction.commandName === 'wordplay') {
-		word = interaction.options.get('word').value.toUpperCase();
-		interaction.reply(`Słowo gry zmienione na: ${word}`);
-	}
+	// if (interaction.commandName === 'wordplay') {
+	// 	word = interaction.options.get('word').value.toUpperCase();
+	// 	interaction.reply(`Słowo gry zmienione na: ${word}`);
+	// }
 });
 
 // logujemy i uruchamiamy bota
