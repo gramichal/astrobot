@@ -62,7 +62,7 @@ client.on('messageCreate', (message: any) => {
 	// sprawdzamy czy wiadomość nie jest od bota - żeby się boty nie zapętlały
 	if (message.author.bot && message.content !== 'N') {
 		return;
-	}
+	} 
 
 	// gra w słowa może być tylko na głównym kanale
 	if (message.channel == process.env.CHANNEL_MAIN_ID) {
