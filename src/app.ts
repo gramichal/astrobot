@@ -32,7 +32,7 @@ const client = new Client({
 });
 
 const Play: WordPlay = {
-	word: 'NIGGER',
+	word: 'TEST',
 	inputWord: [],
 	timeStart: new Date(),
 };

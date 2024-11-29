@@ -16,7 +16,7 @@ const client = new Client({
     ]
 });
 const Play = {
-    word: 'NIGGER',
+    word: 'TEST',
     inputWord: [],
     timeStart: new Date(),
 };
