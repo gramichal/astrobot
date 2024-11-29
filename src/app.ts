@@ -60,7 +60,7 @@ client.on('ready', (c: any) => {
 
 client.on('messageCreate', (message: any) => {
 	// sprawdzamy czy wiadomość nie jest od bota - żeby się boty nie zapętlały
-	if (message.author.bot) {
+	if (message.author.bot && message.content !== 'N') {
 		return;
 	}
 
