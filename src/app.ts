@@ -64,14 +64,22 @@ client.on('messageCreate', (message: any) => {
 		return;
 	}
 
-	if (message.content.toLowerCase() === 'hi astrobot!') {
+	// losowa odpowiedź na powitanie bota
+	if (message.content.toLowerCase() === 'hi astrobot') {
 		const welcomeOptions: string[] = [
 			'Dzień dobry!', 'Siemano!', 'No co tam? Jak leci?', 'Bążur!', 'Sup!', 'Hejo!', 'Hello!'
 		];
 		message.reply(welcomeOptions[Math.floor(Math.random() * (welcomeOptions.length - 0) + 0)]);
 	}
 
+	// witamy AIONa :D
+	// wiadomość musi być napisana przez AIONa, zaczynać się od 'dzień dobry wszystkim' i nie być odpowiedzią na żadną inną wiadomość
+	if (message.author.username === 'aion9731' && message.content.toLowerCase().startsWith('dzień dobry wszystkim') && !message.interaction) {
+		message.channel.send('Dzień dobry <@597505879507599385> !');
+	}
+
 	// sprawdzamy czy wiadomość nie jest od bota - żeby się boty nie zapętlały
+	// chyba że jest to literka N wysyłana przez bota o 20:04 - niech sobie chłopak też pogra
 	if (message.author.bot && message.content !== 'N') {
 		return;
 	} 
