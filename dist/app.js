@@ -16,7 +16,7 @@ const client = new Client({
     ]
 });
 const Play = {
-    word: 'TEST',
+    word: process.env.THE_WORD,
     inputWord: [],
     timeStart: new Date(),
 };
@@ -34,6 +34,9 @@ client.on('ready', (c) => {
     scheduledMessage.start();
 });
 client.on('messageCreate', (message) => {
+    if (message.guildId != process.env.GUILD_ID) {
+        return;
+    }
     if (message.author.bot && message.content !== 'N') {
         return;
     }
@@ -54,10 +57,6 @@ client.on('messageCreate', (message) => {
             Play.inputWord = didYouWin(message, new EmbedBuilder, false, Play);
         }
     }
-    console.log(`[${message.createdAt.toLocaleString()}] ${message.author.username}@${message.channel}: ${message.content}`);
-});
-client.on('interactionCreate', (interaction) => {
-    if (!interaction.isChatInputCommand())
-        return;
+    console.log(`[${message.createdAt.toLocaleString()}] ${message.author.username}@${message.guildId}${message.channel}: ${message.content}`);
 });
 client.login(process.env.TOKEN);

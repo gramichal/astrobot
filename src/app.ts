@@ -32,7 +32,7 @@ const client = new Client({
 });
 
 const Play: WordPlay = {
-	word: 'TEST',
+	word: process.env.THE_WORD!,
 	inputWord: [],
 	timeStart: new Date(),
 };
@@ -59,6 +59,10 @@ client.on('ready', (c: any) => {
 });
 
 client.on('messageCreate', (message: any) => {
+	// ograniczenie bota tylko do serwera ASTRy - później do ogarnięcia przez prefixy
+	if (message.guildId != process.env.GUILD_ID) {
+		return;
+	}
 	// sprawdzamy czy wiadomość nie jest od bota - żeby się boty nie zapętlały
 	if (message.author.bot && message.content !== 'N') {
 		return;
@@ -95,11 +99,11 @@ client.on('messageCreate', (message: any) => {
 		}
 	}
 
-	console.log(`[${message.createdAt.toLocaleString()}] ${message.author.username}@${message.channel}: ${message.content}`);
+	console.log(`[${message.createdAt.toLocaleString()}] ${message.author.username}@${message.guildId}${message.channel}: ${message.content}`);
 });
 
-client.on('interactionCreate', (interaction: any) => {
-	if (!interaction.isChatInputCommand()) return;
+// client.on('interactionCreate', (interaction: any) => {
+// 	if (!interaction.isChatInputCommand()) return;
 
 	// if (interaction.commandName === 'status') {
 	// 	const status = interaction.options.get('bot-status').value;
@@ -114,7 +118,7 @@ client.on('interactionCreate', (interaction: any) => {
 	// 	word = interaction.options.get('word').value.toUpperCase();
 	// 	interaction.reply(`Słowo gry zmienione na: ${word}`);
 	// }
-});
+// });
 
 // logujemy i uruchamiamy bota
 client.login(process.env.TOKEN);
