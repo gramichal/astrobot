@@ -43,8 +43,13 @@ client.on('messageCreate', (message) => {
         ];
         message.reply(welcomeOptions[Math.floor(Math.random() * (welcomeOptions.length - 0) + 0)]);
     }
-    if (message.author.username === 'aion9731' && message.content.toLowerCase().startsWith('dzień dobry wszystkim') && !message.interaction) {
-        message.channel.send('Dzień dobry <@597505879507599385> !');
+    if (message.author.username === process.env.AIN_NAME && !message.interaction) {
+        if (message.content.toLowerCase().startsWith('dzień dobry wszystkim')) {
+            message.channel.send(`Dzień dobry <@${process.env.AIN_ID}> !`);
+        }
+        if (message.content.toLowerCase().startsWith('dobranoc wszystkim')) {
+            message.channel.send(`Dobranoc <@${process.env.AIN_ID}> !`);
+        }
     }
     if (message.author.bot && message.content !== 'N') {
         return;
