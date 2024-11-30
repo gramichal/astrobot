@@ -63,6 +63,14 @@ client.on('messageCreate', (message: any) => {
 	if (message.guildId != process.env.GUILD_ID) {
 		return;
 	}
+
+	if (message.content.toLowerCase() === 'hi astrobot!') {
+		const welcomeOptions: string[] = [
+			'Dzień dobry!', 'Siemano!', 'No co tam? Jak leci?', 'Bążur!', 'Sup!', 'Hejo!', 'Hello!'
+		];
+		message.reply(welcomeOptions[Math.floor(Math.random() * (welcomeOptions.length - 0) + 0)]);
+	}
+
 	// sprawdzamy czy wiadomość nie jest od bota - żeby się boty nie zapętlały
 	if (message.author.bot && message.content !== 'N') {
 		return;

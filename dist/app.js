@@ -37,6 +37,12 @@ client.on('messageCreate', (message) => {
     if (message.guildId != process.env.GUILD_ID) {
         return;
     }
+    if (message.content.toLowerCase() === 'hi astrobot!') {
+        const welcomeOptions = [
+            'Dzień dobry!', 'Siemano!', 'No co tam? Jak leci?', 'Bążur!', 'Sup!', 'Hejo!', 'Hello!'
+        ];
+        message.reply(welcomeOptions[Math.floor(Math.random() * (welcomeOptions.length - 0) + 0)]);
+    }
     if (message.author.bot && message.content !== 'N') {
         return;
     }
