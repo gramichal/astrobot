@@ -10,8 +10,8 @@ const anni: Array<AnniversaryData> = [
 		imageUrl: 'https://media1.tenor.com/m/c86D6_XlACMAAAAd/weekend-party.gif'
 	},
 	{
-		// date: new Date('2022-01-18'),
-		date: new Date('2022-12-01'),
+		date: new Date('2022-01-18'),
+		// date: new Date('2022-12-01'),
 		title: 'Rocznica Utworzenia Astry',
 		color: '#f97316',
 		description: `Chwała założycielom! To już ${getYearString(currentYear - 2022)} razem!`,
