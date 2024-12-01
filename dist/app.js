@@ -81,4 +81,18 @@ client.on('messageCreate', (message) => {
     }
     console.log(`[${message.createdAt.toLocaleString()}] ${message.author.username}@${message.guildId}${message.channel}: ${message.content}`);
 });
+client.on('interactionCreate', (interaction) => {
+    if (!interaction.isChatInputCommand())
+        return;
+    if (interaction.commandName === 'mysl') {
+        const proverb = EVENTS.filter((event) => {
+            const eventDate = event.date;
+            eventDate.setHours(1, 0, 0, 0);
+            const today = new Date();
+            today.setHours(1, 0, 0, 0);
+            return eventDate.getTime() === today.getTime();
+        })[0];
+        interaction.reply(`Myśl dnia: **_${proverb.proverb}_**`);
+    }
+});
 client.login(process.env.TOKEN);

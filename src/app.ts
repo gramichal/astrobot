@@ -148,8 +148,23 @@ client.on('messageCreate', (message: any) => {
 	console.log(`[${message.createdAt.toLocaleString()}] ${message.author.username}@${message.guildId}${message.channel}: ${message.content}`);
 });
 
-// client.on('interactionCreate', (interaction: any) => {
-// 	if (!interaction.isChatInputCommand()) return;
+client.on('interactionCreate', (interaction: any) => {
+	if (!interaction.isChatInputCommand()) return;
+
+	if (interaction.commandName === 'przyslowie') {
+
+		const proverb: EventData = EVENTS.filter((event: EventData) => {
+			const eventDate = event.date;
+			eventDate.setHours(1, 0, 0, 0);
+
+			const today = new Date();
+			today.setHours(1, 0, 0, 0);
+
+			return eventDate.getTime() === today.getTime();
+		})[0];
+
+		interaction.reply(`Myśl dnia: **_${proverb.proverb}_**`);
+	}
 
 	// if (interaction.commandName === 'status') {
 	// 	const status = interaction.options.get('bot-status').value;
@@ -164,7 +179,7 @@ client.on('messageCreate', (message: any) => {
 	// 	word = interaction.options.get('word').value.toUpperCase();
 	// 	interaction.reply(`Słowo gry zmienione na: ${word}`);
 	// }
-// });
+});
 
 // logujemy i uruchamiamy bota
 client.login(process.env.TOKEN);

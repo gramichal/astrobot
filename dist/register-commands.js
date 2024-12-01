@@ -10,7 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 require('dotenv').config();
 const { REST, Routes, ApplicationCommandOptionType } = require('discord.js');
-const commands = [];
+const commands = [
+    {
+        name: 'mysl',
+        description: 'Wyświetla przysłowie dnia',
+    },
+];
 const rest = new REST({ version: 10 }).setToken(process.env.TOKEN);
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {

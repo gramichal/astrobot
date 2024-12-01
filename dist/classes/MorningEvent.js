@@ -20,8 +20,7 @@ Imieniny obchodzą: ${this.prepareNameDayString()}
 
 Tego dnia w roku ${this.morningEvent.description}
 
-Nieznane przysłowie na dzisiaj: **_${this.morningEvent.proverb}_**
-		`;
+Nieznane przysłowie na dzisiaj: **_${this.morningEvent.proverb}_**`;
             this.channel.send(description);
         }
     }
