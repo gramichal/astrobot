@@ -187,4 +187,4 @@ const events: Array<EventData> = [
 	}
 ]
 
-module.exports.EVENTS = events;
+module.exports = events;

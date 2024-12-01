@@ -3,15 +3,14 @@ const { Client, IntentsBitField, ActivityType, EmbedBuilder } = require('discord
 const cron = require('cron');
 
 const { didYouWin } = require('./lib/didYouWin.js');
-// const { daysPassed } = require('./lib/daysPassed.js');
 
 const { Anniversary } = require('./classes/Anniversary.js');
 const { MorningEvent } = require('./classes/MorningEvent.js');
+const { Command } = require('./classes/Command.js');
 
 // pewnie przejdziemy na baze danych z rocznicami - póki co tablica obiektów typu AnniversaryData
-const { ANNIVERSARIES } = require('./data/anniversaries.js');
-const { EVENTS } = require('./data/events.js');
-const { COMPLEMENTS } = require('./data/complements.js');
+const ANNIVERSARIES = require('./data/anniversaries.js');
+const EVENTS = require('./data/events.js');
 
 interface WordPlay {
 	word: string;
@@ -86,6 +85,12 @@ client.on('messageCreate', (message: any) => {
 		return;
 	}
 
+	['.m', '.p ', '.k '].forEach((cm) => {
+		if (message.content.toLowerCase().startsWith(cm)) {
+			new Command(cm, message).run();
+		}
+	});
+
 	// losowa odpowiedź na powitanie bota
 	if (message.content.toLowerCase() === 'hi astrobot') {
 		const welcomeOptions: string[] = [
@@ -113,7 +118,7 @@ client.on('messageCreate', (message: any) => {
 	// chyba że jest to literka N wysyłana przez bota o 20:04 - niech sobie chłopak też pogra
 	if (message.author.bot && message.content !== 'N') {
 		return;
-	} 
+	}
 
 	// gra w słowa może być tylko na głównym kanale
 	if (message.channel == process.env.CHANNEL_MAIN_ID) {
@@ -152,23 +157,8 @@ client.on('messageCreate', (message: any) => {
 client.on('interactionCreate', (interaction: any) => {
 	if (!interaction.isChatInputCommand()) return;
 
-	if (interaction.commandName === 'przyslowie') {
-
-		const proverb: EventData = EVENTS.filter((event: EventData) => {
-			const eventDate = event.date;
-			eventDate.setHours(1, 0, 0, 0);
-
-			const today = new Date();
-			today.setHours(1, 0, 0, 0);
-
-			return eventDate.getTime() === today.getTime();
-		})[0];
-
-		interaction.reply(`Myśl dnia: **_${proverb.proverb}_**`);
-	}
-
-	if (interaction.commandName === 'komplement') {
-		interaction.reply(COMPLEMENTS[Math.floor(Math.random() * (COMPLEMENTS.length - 0) + 0)]);
+	if (interaction.commandName === 'ping') {
+		interaction.reply('pong');
 	}
 
 	// if (interaction.commandName === 'status') {

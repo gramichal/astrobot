@@ -304,4 +304,4 @@ const complements: string[] = [
 	'Z tobą życie jest jak niekończąca się opowieść o miłości.'
 ];
 
-module.exports.COMPLEMENTS = complements;
+module.exports = complements;

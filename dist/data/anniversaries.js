@@ -1,7 +1,7 @@
 "use strict";
 const { getYearString } = require('./../lib/year.js');
 const currentYear = new Date().getFullYear();
-const anni = [
+const anniversaries = [
     {
         date: new Date('2023-01-08'),
         title: 'Rocznica wyjścia wesołegooo',
@@ -17,4 +17,4 @@ const anni = [
         imageUrl: 'https://media1.tenor.com/m/b1nwyeOIKlwAAAAd/stars-sparkle.gif'
     }
 ];
-module.exports.ANNIVERSARIES = anni;
+module.exports = anniversaries;

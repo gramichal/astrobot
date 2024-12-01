@@ -1,7 +1,7 @@
 const { getYearString } = require('./../lib/year.js');
 const currentYear: number = new Date().getFullYear();
 
-const anni: Array<AnniversaryData> = [
+const anniversaries: Array<AnniversaryData> = [
 	{
 		date: new Date('2023-01-08'),
 		title: 'Rocznica wyjścia wesołegooo',
@@ -19,4 +19,4 @@ const anni: Array<AnniversaryData> = [
 	}
 ]
 
-module.exports.ANNIVERSARIES = anni;
+module.exports = anniversaries;

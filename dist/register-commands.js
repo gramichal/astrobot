@@ -12,12 +12,8 @@ require('dotenv').config();
 const { REST, Routes, ApplicationCommandOptionType } = require('discord.js');
 const commands = [
     {
-        name: 'przyslowie',
-        description: 'Wyświetla przysłowie dnia',
-    },
-    {
-        name: 'komplement',
-        description: 'Wysyła piękny komplement',
+        name: 'ping',
+        description: 'Wysyła pinga do bota',
     },
 ];
 const rest = new REST({ version: 10 }).setToken(process.env.TOKEN);

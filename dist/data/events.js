@@ -187,4 +187,4 @@ const events = [
         nameDay: ['Barbacjan', 'Donata', 'Katarzyna', 'Kolumba', 'Mariusz', 'Melania', 'Paulina', 'Saturnina', 'Sebastian', 'Sylwester', 'Sylwestra', 'Tworzysław', 'Zotyk']
     }
 ];
-module.exports.EVENTS = events;
+module.exports = events;

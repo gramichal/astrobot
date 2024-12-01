@@ -5,9 +5,9 @@ const cron = require('cron');
 const { didYouWin } = require('./lib/didYouWin.js');
 const { Anniversary } = require('./classes/Anniversary.js');
 const { MorningEvent } = require('./classes/MorningEvent.js');
-const { ANNIVERSARIES } = require('./data/anniversaries.js');
-const { EVENTS } = require('./data/events.js');
-const { COMPLEMENTS } = require('./data/complements.js');
+const { Command } = require('./classes/Command.js');
+const ANNIVERSARIES = require('./data/anniversaries.js');
+const EVENTS = require('./data/events.js');
 ;
 ;
 const client = new Client({
@@ -46,6 +46,11 @@ client.on('messageCreate', (message) => {
     if (message.guildId != process.env.GUILD_ID) {
         return;
     }
+    ['.m', '.p ', '.k '].forEach((cm) => {
+        if (message.content.toLowerCase().startsWith(cm)) {
+            new Command(cm, message).run();
+        }
+    });
     if (message.content.toLowerCase() === 'hi astrobot') {
         const welcomeOptions = [
             'Dzień dobry!', 'Siemano!', 'No co tam? Jak leci?', 'Bążur!', 'Sup!', 'Hejo!', 'Hello!'
@@ -85,18 +90,8 @@ client.on('messageCreate', (message) => {
 client.on('interactionCreate', (interaction) => {
     if (!interaction.isChatInputCommand())
         return;
-    if (interaction.commandName === 'przyslowie') {
-        const proverb = EVENTS.filter((event) => {
-            const eventDate = event.date;
-            eventDate.setHours(1, 0, 0, 0);
-            const today = new Date();
-            today.setHours(1, 0, 0, 0);
-            return eventDate.getTime() === today.getTime();
-        })[0];
-        interaction.reply(`Myśl dnia: **_${proverb.proverb}_**`);
-    }
-    if (interaction.commandName === 'komplement') {
-        interaction.reply(COMPLEMENTS[Math.floor(Math.random() * (COMPLEMENTS.length - 0) + 0)]);
+    if (interaction.commandName === 'ping') {
+        interaction.reply('pong');
     }
 });
 client.login(process.env.TOKEN);

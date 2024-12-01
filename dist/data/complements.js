@@ -304,4 +304,4 @@ const complements = [
     'Twoje serce jest jak nieodkryty skarb – pełne tajemnic i piękna.',
     'Z tobą życie jest jak niekończąca się opowieść o miłości.'
 ];
-module.exports.COMPLEMENTS = complements;
+module.exports = complements;
