@@ -4,7 +4,9 @@ const { Client, IntentsBitField, ActivityType, EmbedBuilder } = require('discord
 const cron = require('cron');
 const { didYouWin } = require('./lib/didYouWin.js');
 const { Anniversary } = require('./classes/Anniversary.js');
+const { MorningEvent } = require('./classes/MorningEvent.js');
 const { ANNIVERSARIES } = require('./data/anniversaries.js');
+const { EVENTS } = require('./data/events.js');
 ;
 ;
 const client = new Client({
@@ -26,6 +28,12 @@ client.on('ready', (c) => {
         name: "Sprzedam słoik i 5kg twarogu!",
         type: ActivityType.Custom
     });
+    let morningShow = new cron.CronJob('00 00 08 * * *', () => {
+        EVENTS.forEach((morningEvent) => {
+            new MorningEvent(client, morningEvent).show();
+        });
+    });
+    morningShow.start();
     let scheduledMessage = new cron.CronJob('00 45 15 * * *', () => {
         ANNIVERSARIES.forEach((anniversary) => {
             new Anniversary(client, new EmbedBuilder(), anniversary).celebrate();
@@ -45,10 +53,10 @@ client.on('messageCreate', (message) => {
     }
     if (message.author.username === process.env.AIN_NAME && !message.interaction) {
         if (message.content.toLowerCase().startsWith('dzień dobry wszystkim')) {
-            message.channel.send(`Dzień dobry <@${process.env.AIN_ID}> !`);
+            message.channel.send(`Dzień dobry <@${process.env.AIN_ID}>! :wave:`);
         }
         if (message.content.toLowerCase().startsWith('dobranoc wszystkim')) {
-            message.channel.send(`Dobranoc <@${process.env.AIN_ID}> !`);
+            message.channel.send(`Dobranoc <@${process.env.AIN_ID}>! :stich_sleep:`);
         }
     }
     if (message.author.bot && message.content !== 'N') {

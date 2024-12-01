@@ -4,9 +4,11 @@ const cron = require('cron');
 
 const { didYouWin } = require('./lib/didYouWin.js');
 const { Anniversary } = require('./classes/Anniversary.js');
+const { MorningEvent } = require('./classes/MorningEvent.js');
 
 // pewnie przejdziemy na baze danych z rocznicami - póki co tablica obiektów typu AnniversaryData
 const { ANNIVERSARIES } = require('./data/anniversaries.js');
+const { EVENTS } = require('./data/events.js');
 
 interface WordPlay {
 	word: string;
@@ -21,6 +23,11 @@ interface AnniversaryData {
 	description?: string,
 	imageUrl?: string
 };
+
+interface EventData {
+	date: Date,
+	description: string
+}
 
 const client = new Client({
 	intents: [
@@ -45,6 +52,16 @@ client.on('ready', (c: any) => {
 		name: "Sprzedam słoik i 5kg twarogu!",
 		type: ActivityType.Custom
 	});
+
+	// ustawiamy crona aby codziennie o określonej godzinie robił akcję
+	let morningShow = new cron.CronJob('00 00 08 * * *', () => {
+		// trawersujemy całą tablicę wydarzeń
+		EVENTS.forEach((morningEvent: EventData) => {
+			new MorningEvent(client, morningEvent).show();
+		});
+	});
+	// startujemy roskład dnia
+	morningShow.start();
 
 	// ustawiamy crona aby codziennie o określonej godzinie robił akcję
 	let scheduledMessage = new cron.CronJob('00 45 15 * * *', () => {
