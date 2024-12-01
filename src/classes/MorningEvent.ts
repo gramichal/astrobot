@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { daysPassed } = require('./../lib/daysPassed.js');
 
 module.exports.MorningEvent = class MorningEvent {
 
@@ -28,13 +29,32 @@ module.exports.MorningEvent = class MorningEvent {
 	show() {
 		// jeśli timestamp z daty wydarzenia i dzisiejszej (przetworzonej) daty jest taki sam to działamy
 		if (this.today.getTime() === this.morningEvent.date.getTime()) {
-			
-			// przygotowujemy wiadomość
-			// ...
-			const description: string = this.morningEvent.description;
+
+			const daysInYear: number = this.isLeapYear() ? 366 : 365;
+
+			let description: string = `
+Dziś jest **${this.today.toLocaleDateString('pl-PL', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}.** Dzień ten jest **${daysPassed(this.today)}** dniem w kalendarzu gregoriańskim. Do końca roku pozostało **${daysInYear - daysPassed(this.today)}** dni
+
+Imieniny obchodzą: ${this.prepareNameDayString()}
+
+Tego dnia w roku ${this.morningEvent.description}
+
+Nieznane przysłowie na dzisiaj: **_${this.morningEvent.proverb}_**`;
 
 	 		// wysyłamy info na kanał
 			this.channel.send(description);
 		}
+	}
+
+	prepareNameDayString(): string {
+		const names = this.morningEvent.nameDay.join(', ');
+		
+		const pos = names.lastIndexOf(', ');
+		return `${names.substring(0,pos)} i ${names.substring(pos+1)}`
+	}
+
+	isLeapYear(): boolean {
+		const year = new Date().getFullYear();
+		return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 	}
 }

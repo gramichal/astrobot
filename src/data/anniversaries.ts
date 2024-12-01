@@ -15,7 +15,7 @@ const anni: Array<AnniversaryData> = [
 		title: 'Rocznica Utworzenia Astry',
 		color: '#f97316',
 		description: `Chwała założycielom! To już ${getYearString(currentYear - 2022)} razem!`,
-		imageUrl: 'https://media1.tenor.com/m/6nhSFu2lUKkAAAAC/burn-elmo.gif'
+		imageUrl: 'https://media1.tenor.com/m/b1nwyeOIKlwAAAAd/stars-sparkle.gif'
 	}
 ]
 

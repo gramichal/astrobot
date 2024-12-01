@@ -3,6 +3,8 @@ const { Client, IntentsBitField, ActivityType, EmbedBuilder } = require('discord
 const cron = require('cron');
 
 const { didYouWin } = require('./lib/didYouWin.js');
+// const { daysPassed } = require('./lib/daysPassed.js');
+
 const { Anniversary } = require('./classes/Anniversary.js');
 const { MorningEvent } = require('./classes/MorningEvent.js');
 
@@ -26,7 +28,9 @@ interface AnniversaryData {
 
 interface EventData {
 	date: Date,
-	description: string
+	description: string,
+	proverb: string,
+	nameDay: string[]
 }
 
 const client = new Client({
