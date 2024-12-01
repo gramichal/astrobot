@@ -12,7 +12,7 @@ require('dotenv').config();
 const { REST, Routes, ApplicationCommandOptionType } = require('discord.js');
 const commands = [
     {
-        name: 'mysl',
+        name: 'przyslowie',
         description: 'Wyświetla przysłowie dnia',
     },
 ];

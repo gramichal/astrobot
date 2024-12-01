@@ -84,7 +84,7 @@ client.on('messageCreate', (message) => {
 client.on('interactionCreate', (interaction) => {
     if (!interaction.isChatInputCommand())
         return;
-    if (interaction.commandName === 'mysl') {
+    if (interaction.commandName === 'przyslowie') {
         const proverb = EVENTS.filter((event) => {
             const eventDate = event.date;
             eventDate.setHours(1, 0, 0, 0);
