@@ -6,6 +6,10 @@ const commands: object[] = [
 		name: 'przyslowie',
 		description: 'Wyświetla przysłowie dnia',
 	},
+	{
+		name: 'komplement',
+		description: 'Wysyła piękny komplement',
+	},
 	// {
 	// 	name: 'status',
 	// 	description: 'Pozwala ustawić status',

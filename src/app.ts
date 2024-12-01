@@ -11,6 +11,7 @@ const { MorningEvent } = require('./classes/MorningEvent.js');
 // pewnie przejdziemy na baze danych z rocznicami - póki co tablica obiektów typu AnniversaryData
 const { ANNIVERSARIES } = require('./data/anniversaries.js');
 const { EVENTS } = require('./data/events.js');
+const { COMPLEMENTS } = require('./data/complements.js');
 
 interface WordPlay {
 	word: string;
@@ -164,6 +165,10 @@ client.on('interactionCreate', (interaction: any) => {
 		})[0];
 
 		interaction.reply(`Myśl dnia: **_${proverb.proverb}_**`);
+	}
+
+	if (interaction.commandName === 'komplement') {
+		interaction.reply(COMPLEMENTS[Math.floor(Math.random() * (COMPLEMENTS.length - 0) + 0)]);
 	}
 
 	// if (interaction.commandName === 'status') {

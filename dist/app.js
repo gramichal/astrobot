@@ -7,6 +7,7 @@ const { Anniversary } = require('./classes/Anniversary.js');
 const { MorningEvent } = require('./classes/MorningEvent.js');
 const { ANNIVERSARIES } = require('./data/anniversaries.js');
 const { EVENTS } = require('./data/events.js');
+const { COMPLEMENTS } = require('./data/complements.js');
 ;
 ;
 const client = new Client({
@@ -93,6 +94,9 @@ client.on('interactionCreate', (interaction) => {
             return eventDate.getTime() === today.getTime();
         })[0];
         interaction.reply(`Myśl dnia: **_${proverb.proverb}_**`);
+    }
+    if (interaction.commandName === 'komplement') {
+        interaction.reply(COMPLEMENTS[Math.floor(Math.random() * (COMPLEMENTS.length - 0) + 0)]);
     }
 });
 client.login(process.env.TOKEN);

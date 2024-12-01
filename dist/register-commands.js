@@ -15,6 +15,10 @@ const commands = [
         name: 'przyslowie',
         description: 'Wyświetla przysłowie dnia',
     },
+    {
+        name: 'komplement',
+        description: 'Wysyła piękny komplement',
+    },
 ];
 const rest = new REST({ version: 10 }).setToken(process.env.TOKEN);
 (() => __awaiter(void 0, void 0, void 0, function* () {
