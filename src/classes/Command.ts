@@ -35,7 +35,7 @@ module.exports.Command = class Command {
 			this.message.reply(`Myśl dnia: **_${proverb.proverb}_**`);
 		}
 
-		if (this.input === '.poc ') {
+		if (this.input === '.psz ') {
 			if (this.message.mentions.users.size === 0) {
 				return;
 			}

@@ -63,7 +63,7 @@ client.on('messageCreate', (message) => {
     if (message.author.bot && message.content !== 'N') {
         return;
     }
-    ['.mysl', '.poc ', '.kom '].forEach((cm) => {
+    ['.mysl', '.psz ', '.kom '].forEach((cm) => {
         if (message.content.toLowerCase().startsWith(cm)) {
             new Command(cm, message).run();
         }

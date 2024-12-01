@@ -114,7 +114,7 @@ client.on('messageCreate', (message: any) => {
 		return;
 	}
 
-	['.mysl', '.poc ', '.kom '].forEach((cm) => {
+	['.mysl', '.psz ', '.kom '].forEach((cm) => {
 		if (message.content.toLowerCase().startsWith(cm)) {
 			new Command(cm, message).run();
 		}
