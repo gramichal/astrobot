@@ -9,8 +9,8 @@ module.exports.Command = class Command {
         this.message = message;
     }
     run() {
-        if (this.input === '.m') {
-            if (this.message.content !== '.m') {
+        if (this.input === '.mysl') {
+            if (this.message.content !== '.mysl') {
                 return;
             }
             const proverb = EV.filter((event) => {
@@ -22,7 +22,7 @@ module.exports.Command = class Command {
             })[0];
             this.message.reply(`Myśl dnia: **_${proverb.proverb}_**`);
         }
-        if (this.input === '.p ') {
+        if (this.input === '.poc ') {
             if (this.message.mentions.users.size === 0) {
                 return;
             }
@@ -33,7 +33,7 @@ module.exports.Command = class Command {
             const mentionedUsers = mentions.join(" ");
             this.message.reply(`${mentionedUsers} ${COMFORTS[Math.floor(Math.random() * (COMFORTS.length - 0) + 0)]}`);
         }
-        if (this.input === '.k ') {
+        if (this.input === '.kom ') {
             if (this.message.mentions.users.size === 0) {
                 return;
             }

@@ -85,12 +85,6 @@ client.on('messageCreate', (message: any) => {
 		return;
 	}
 
-	['.m', '.p ', '.k '].forEach((cm) => {
-		if (message.content.toLowerCase().startsWith(cm)) {
-			new Command(cm, message).run();
-		}
-	});
-
 	// losowa odpowiedź na powitanie bota
 	if (message.content.toLowerCase() === 'hi astrobot') {
 		const welcomeOptions: string[] = [
@@ -119,6 +113,12 @@ client.on('messageCreate', (message: any) => {
 	if (message.author.bot && message.content !== 'N') {
 		return;
 	}
+
+	['.mysl', '.poc ', '.kom '].forEach((cm) => {
+		if (message.content.toLowerCase().startsWith(cm)) {
+			new Command(cm, message).run();
+		}
+	});
 
 	// gra w słowa może być tylko na głównym kanale
 	if (message.channel == process.env.CHANNEL_MAIN_ID) {

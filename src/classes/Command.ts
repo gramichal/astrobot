@@ -15,9 +15,10 @@ module.exports.Command = class Command {
 	}
 
 	run() {
-		if (this.input === '.m') {
+		//'.mysl', '.poc ', '.kom '
+		if (this.input === '.mysl') {
 
-			if (this.message.content !== '.m') {
+			if (this.message.content !== '.mysl') {
 				return;
 			}
 
@@ -34,7 +35,7 @@ module.exports.Command = class Command {
 			this.message.reply(`Myśl dnia: **_${proverb.proverb}_**`);
 		}
 
-		if (this.input === '.p ') {
+		if (this.input === '.poc ') {
 			if (this.message.mentions.users.size === 0) {
 				return;
 			}
@@ -50,7 +51,7 @@ module.exports.Command = class Command {
 			this.message.reply(`${mentionedUsers} ${COMFORTS[Math.floor(Math.random() * (COMFORTS.length - 0) + 0)]}`);
 		}
 
-		if (this.input === '.k ') {
+		if (this.input === '.kom ') {
 			if (this.message.mentions.users.size === 0) {
 				return;
 			}

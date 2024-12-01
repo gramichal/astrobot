@@ -46,11 +46,6 @@ client.on('messageCreate', (message) => {
     if (message.guildId != process.env.GUILD_ID) {
         return;
     }
-    ['.m', '.p ', '.k '].forEach((cm) => {
-        if (message.content.toLowerCase().startsWith(cm)) {
-            new Command(cm, message).run();
-        }
-    });
     if (message.content.toLowerCase() === 'hi astrobot') {
         const welcomeOptions = [
             'Dzień dobry!', 'Siemano!', 'No co tam? Jak leci?', 'Bążur!', 'Sup!', 'Hejo!', 'Hello!'
@@ -68,6 +63,11 @@ client.on('messageCreate', (message) => {
     if (message.author.bot && message.content !== 'N') {
         return;
     }
+    ['.mysl', '.poc ', '.kom '].forEach((cm) => {
+        if (message.content.toLowerCase().startsWith(cm)) {
+            new Command(cm, message).run();
+        }
+    });
     if (message.channel == process.env.CHANNEL_MAIN_ID) {
         if ((message.content !== '' && Play.word.includes(message.content))) {
             Play.inputWord.push(message.content);
