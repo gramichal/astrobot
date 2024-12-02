@@ -66,9 +66,9 @@ client.on('messageCreate', (message) => {
     if (message.author.bot && message.content !== 'N') {
         return;
     }
-    ['.mysl', '.psz ', '.kom '].forEach((cm) => {
+    ['.mysl', '.psz ', '.kom ', '.pac '].forEach((cm) => {
         if (message.content.toLowerCase().startsWith(cm)) {
-            new Command(cm, message).run();
+            new Command(cm, message, new EmbedBuilder()).run();
         }
     });
     if (message.channel == process.env.CHANNEL_MAIN_ID) {
