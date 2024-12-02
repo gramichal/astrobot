@@ -100,11 +100,14 @@ client.on('messageCreate', (message: any) => {
 		// wiadomość zaczynać się od 'dzień dobry wszystkim'
 		if (message.content.toLowerCase().startsWith('dzień dobry wszystkim')) {
 			message.channel.send(`Dzień dobry <@${process.env.AIN_ID}>! :wave:`);
+			message.react('👋');
 		}
 
 		// i dobranoc!
 		if (message.content.toLowerCase().startsWith('dobranoc wszystkim')) {
-			message.channel.send(`Dobranoc <@${process.env.AIN_ID}>! :stich_sleep:`);
+			message.channel.send(`Dobranoc <@${process.env.AIN_ID}>! <:stich_sleep:1286775967091527680>`);
+			message.react(message.guild.emojis.cache.get('1286775967091527680'))
+				.catch(console.error);
 		}
 	}
 
